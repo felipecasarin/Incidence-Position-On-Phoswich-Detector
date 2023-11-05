@@ -36,16 +36,3 @@ def normdata(Tab):
 			D[ix][iy][1][0:4]=Tab[ix][iy][1][0:4]/S[ix][iy][1] #columns
 	return D
 
-''' # test
-b=np.ones((2,4))
-c=np.zeros((2,4))
-eps=0.1
-xoff=0.
-yoff=0.
-
-ExCal=recaldata(ExDataTab,b,c)
-print(ExCal)
-ExN=normdata(ExCal) # normalize exp. data
-print(ExN)
-
-'''

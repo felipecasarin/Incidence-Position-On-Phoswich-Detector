@@ -121,34 +121,7 @@ def fitpatxy(): # pattern fit of x,y
     result = sp.optimize.least_squares(fpatxy,X,bounds=(bdi,bds),args = ([newExN[0:2]]), ftol=1e-08, xtol=1e-08, gtol=1e-08, loss='soft_l1', tr_solver='lsmr')
     #result = sp.optimize.leastsq(fpatxy,X,bounds=(bdi,bds),args = ([newExN[0:2]]), ftol=1e-08, xtol=1e-08, gtol=1e-08, loss='cauchy', tr_solver='lsmr')
     #print(result)
-    print('--------------------')
-    '''
-    chi2dof = np.sum(result.fun**2)/(result.fun.size - result.x.size)
-    cov = chi2dof
-    perr = np.sqrt(cov)
-    print("sigma")
-    print(perr)
-    '''
-    J1 = result.jac
-    print("Jacobiano.transpose")
-    print(J1)
-    #print('*------------------*')
-    #print(J[1])
-    J1t = J1.transpose()
-    hess = np.dot(J1t,J1)
-    cov = linalg.inv(hess)
-    var = np.sqrt(np.diagonal(cov))
-    scalecov = cov*(result.cost)
-    print("var")
-    print(var)
-    
-    global unc
-    
-    unc = np.sqrt(np.diagonal(scalecov))
-    
-    #print("uncertainty")
-    #print(unc)
-
+   
     return result.x
 
 def calib(l1,l2,l3,l4,c1,c2,c3,c4):
