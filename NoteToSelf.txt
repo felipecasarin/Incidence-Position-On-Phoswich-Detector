@@ -1,0 +1,6 @@
+On VSCode terminal:
+
+import Fits
+Fits.newfitbc()
+===============
+Executes newfitbc() function of Fits.py
