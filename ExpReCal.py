@@ -20,9 +20,9 @@ def recaldata(Tab,b,c):
 	rec=np.empty((Nx,Ny,2,4))
 	for ix in range(0,Nx):
 		for iy in range(0,Ny):
-			L=(Tab[ix][iy][0]+c[0])*b[0]
+			L=(Tab[ix][iy][0])*b[0]+c[0]
 			rec[ix][iy][0][0:4]=L[0:4] #lines
-			C=(Tab[ix][iy][1]+c[1])*b[1]
+			C=(Tab[ix][iy][1])*b[1]+c[1]
 			rec[ix][iy][1][0:4]=C[0:4] #columns
 	return rec
 	

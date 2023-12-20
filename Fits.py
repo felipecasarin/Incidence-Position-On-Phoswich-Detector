@@ -123,17 +123,17 @@ def newfitbc(eps0=0.5,Ybg0=0.005,b=np.ones((2,4)),c=np.zeros((2,4)),blim=10.,cli
 	bds[3]=1.001
 	bds[11]=110.
 #bds[1]=0.01
-	result = sp.optimize.least_squares(fbc,X,bounds=(bdi,bds),args = ([ExDataTab,ExN*RelErrorDat]),loss='cauchy',tr_solver='lsmr', verbose=2)
-##Configurar f_scale e explorar outras configurações##
+	result = sp.optimize.least_squares(fbc,X,bounds=(bdi,bds),args = ([ExDataTab,ExN*RelErrorDat]),loss='soft_l1',tr_solver='lsmr',method='trf', verbose=2)
+##tr_solver exact/sparse_cg
 
 #Test using loss='soft_l1'
 
 ##Tentar methods diferentes##
 	print(result)
-	np.savetxt("par_eps_tryNOYBG.txt",np.array([result.x[0]]))
+	np.savetxt("par_eps_NOYBG_softl1.txt",np.array([result.x[0]]))
 	#np.savetxt("par_Ybg0_try.txt",np.array([result.x[1]]))
-	np.savetxt("par_b_tryNOYBG.txt", result.x[1:9])
-	np.savetxt("par_c_tryNOYBG.txt", result.x[9:17])
+	np.savetxt("par_b_NOYBG_softl1.txt", result.x[1:9])
+	np.savetxt("par_c_NOYBG_softl1.txt", result.x[9:17])
 	ending_time = time.time()
 	print("Elapsed time:",ending_time - starting_time)
 	return result.x
@@ -165,3 +165,34 @@ def fitb(eps0=0.5,Ybg0=0.,b=np.ones((2,4)),blim=10.): #blim minimum, xylim min/m
 	np.savetxt("par_b.txt", result.x[2:10])
 	return result.x
 
+#===============================================================
+
+def fb2(X,Y_dat,Y_sig):
+	IM.eps=X[0] # sets model parameters for errorfunc eval
+	b=np.reshape(X[1:9],(2,4))
+	ExN=ERC.normdata(ERC.recaldata(Y_dat,b,np.zeros((2,4))))# 
+	YTab=Ytable(0,0)
+	#Tab=np.reshape(ExN,(Nx,Ny,2,4))
+	f=np.ravel(errorfunc(0.,0.,ExN,YTab)/abs(Y_sig))[0:328] # drop last experimental point (4l,4c, [328:336])
+	return f
+
+def fitb2(eps0=0.5,b=np.ones((2,4)),blim=10.): #blim minimum, xylim min/max both x/y
+	#initial values
+	X=np.array([])
+	X=np.append(X,eps0) # initial eps
+	X=np.append(X,np.ravel(b))  # initial b's
+	#lower limits:
+	bdi=np.array([0.])
+	bdi=np.append(bdi,np.ones((8))/blim) 	
+	bdi[3]=0.999
+	#upper limits:
+	bds=np.array([])
+	bds=np.append(bds,1.)
+	bds=np.append(bds,np.ones((8))*blim) 
+	bds[3]=1.001
+
+	result = sp.optimize.least_squares(fb2,X,bounds=(bdi,bds),args = ([ExDataTab,ExN*RelErrorDat]), loss = 'cauchy')
+	print(result)
+	np.savetxt("par_eps.txt",np.array([result.x[0]]))
+	np.savetxt("par_b.txt", result.x[1:9])
+	return result.x

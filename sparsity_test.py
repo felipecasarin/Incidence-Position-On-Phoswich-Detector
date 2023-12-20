@@ -97,6 +97,11 @@ def estimate_jacobian_sparsity(func, x, *args):
 sparsity_pattern = estimate_jacobian_sparsity(fbc, X, Y_dat, Y_sig)
 dense_sparsity = sparsity_pattern.toarray()
 
+file_path = "sparsity_pattern_matrix.txt"
+
+# Save the sparsity pattern matrix to a text file
+np.savetxt(file_path, dense_sparsity, fmt='%d')
+
 print(dense_sparsity)
 
 

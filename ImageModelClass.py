@@ -12,7 +12,7 @@ particularized to phoswich where interaction is at surface at height h from
 4 x 4 SiPM array device.
 '''
 class ImageModel:
-	def __init__(self,eps=0.1,Lpitch=4.2,h=10.,n1=1.6,n2=1.): # pixel array pitch and model parameters		
+	def __init__(self,eps=0.5,Lpitch=4.2,h=10.,n1=1.6,n2=1.): # pixel array pitch and model parameters		
 		self.eps=eps
 		self.Lpitch=Lpitch
 		self.h=h
@@ -81,9 +81,11 @@ class ImageModel:
 		for xy in self.imagelist1(x,y): # first reflections
 			(xi,yi)=xy	
 			Y=Y+self.fRefl(xi,yi,xl,yl)*W(xi-xl,yi-yl,1.,1.,self.h)
+			'''
 		for xy in self.imagelist2(x,y): # second reflections
 			(xi,yi)=xy
 			Y=Y+pow(self.fRefl(xi,yi,xl,yl),2)*W(xi-xl,yi-yl,1.,1.,self.h)
+			'''
 		return Y
 
 	def YPattern(self,Ypm,direction,istonormalize=1): # Lines pattern: direction=0, Columns: direction=1
