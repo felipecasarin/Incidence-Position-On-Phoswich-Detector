@@ -130,10 +130,10 @@ def newfitbc(eps0=0.5,Ybg0=0.005,b=np.ones((2,4)),c=np.zeros((2,4)),blim=10.,cli
 
 ##Tentar methods diferentes##
 	print(result)
-	np.savetxt("par_eps_NOYBG_softl1.txt",np.array([result.x[0]]))
+	np.savetxt("par_eps_NOYBG_softl1_test.txt",np.array([result.x[0]]))
 	#np.savetxt("par_Ybg0_try.txt",np.array([result.x[1]]))
-	np.savetxt("par_b_NOYBG_softl1.txt", result.x[1:9])
-	np.savetxt("par_c_NOYBG_softl1.txt", result.x[9:17])
+	np.savetxt("par_b_NOYBG_softl1_test.txt", result.x[1:9])
+	np.savetxt("par_c_NOYBG_softl1_test.txt", result.x[9:17])
 	ending_time = time.time()
 	print("Elapsed time:",ending_time - starting_time)
 	return result.x
