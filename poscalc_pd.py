@@ -21,19 +21,19 @@ import openpyxl
 #Ybg0=1.E-4
 
 
-tab_eps0 = "./par_eps_NOYBG_softl1.txt"
+tab_eps0 = "./par_eps_Mean_inc_invl_2reflex_switch.txt"
 eps0 = np.loadtxt(tab_eps0)
 
 #tab_Ybg0 = "./par_Ybg0_2.txt"
 #Ybg0 = np.loadtxt(tab_Ybg0)
 
 #Import of calibration parameters b calculated by fitb() from Fits.py
-tab_b="./par_b_NOYBG_softl1.txt"
+tab_b="./par_b_Mean_inc_invl_2reflex_switch.txt"
 
 b=np.loadtxt(tab_b)
 #b=np.array([1,1,1,1,1,1,1,1])
 
-tab_c="./par_c_NOYBG_softl1.txt"
+tab_c="./par_c_Mean_inc_invl_2reflex_switch.txt"
 
 c=np.loadtxt(tab_c)
 
@@ -49,7 +49,7 @@ ruler=Lpitch*np.array([-1.5,-0.5,0.5,1.5])
 ####################################################################
 
 #Opens the root file with the data to be processed
-data_address = 'C:/Users/Usuario/Desktop/Incidence-Position-On-Phoswich-Detector/pha_6_sample.xlsx'
+data_address = 'C:/Users/Usuario/Desktop/Incidence-Position-On-Phoswich-Detector/4_2.xlsx'
 data = pd.read_excel(data_address)
 print(data.columns)
 
@@ -58,7 +58,7 @@ print(data.columns)
 def fpatxy(X,Y_dat): 
 	x=X[0]
 	y=X[1]
-	f=ft.PatternError(x,y,Y_dat)   #<====PatternErrorOffset??
+	f=ft.PatternErrorOffset(x,y,-3.5,-2.1,Y_dat)   #<====PatternErrorOffset??
 	return f
 
 def Ytable(xhole,yhole,xoff=0.,yoff=0.,istonorm=1,a=np.ones((4,4))): # theoretical yields calculated using the hole position (xhole,yhole)
@@ -75,7 +75,7 @@ def Ytable(xhole,yhole,xoff=0.,yoff=0.,istonorm=1,a=np.ones((4,4))): # theoretic
 
 def fitpatxy(): # pattern fit of x,y
 	# loads model and calib. fit parameters
-    IM.eps=np.loadtxt("par_eps_NOYBG_softl1.txt")
+    IM.eps=np.loadtxt("par_eps_Mean_inc_invl_2reflex_switch.txt")
     #IM.Ybg=np.loadtxt("par_Ybg0_2.txt")
     xguess=np.sum(ruler*newExN[0][0:4])*3.
     #print('old xguess=', xguess)
@@ -183,4 +183,4 @@ def pos0():
             new_row = {'L1':L1,'L2':L2,'L3':L3,'L4':L4,'C1':C1,'C2':C2,'C3':C3,'C4':C4,'cL1':newExN[0][3],'cL2':newExN[0][2],'cL3':newExN[0][1],'cL4':newExN[0][0],'cC1':newExN[1][0],'cC2':newExN[1][1],'cC3':newExN[1][2],'cC4':newExN[1][3],'X':result.x[1],'Y':result.x[0]}
             response = response.append(new_row, ignore_index=True)
     print("It is done.")
-    response.to_excel('output_pha_6_sample_softl1.xlsx', index=False)
+    response.to_excel('output_4_2_Mean_inc_invl_2reflex_switch.xlsx', index=False)

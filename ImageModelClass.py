@@ -42,7 +42,7 @@ class ImageModel:
 
 	def imagelist1(self,x,y):
 		il=[self.image(x,y,0)]
-		for f in range(1,4):
+		for f in range(0,4):	# was 1,4 on 15/09
 			il.append(self.image(x,y,f))
 		return il
 	
@@ -51,7 +51,7 @@ class ImageModel:
 		f1=0
 		for xy in self.imagelist1(x,y):
 			xi1,yi1=xy
-			for n in range(1,4):
+			for n in range(0,4):	# was 1,4 on 15/09
 				f2=f1+n
 				if f2>3:
 					f2=f2-4
@@ -81,11 +81,11 @@ class ImageModel:
 		for xy in self.imagelist1(x,y): # first reflections
 			(xi,yi)=xy	
 			Y=Y+self.fRefl(xi,yi,xl,yl)*W(xi-xl,yi-yl,1.,1.,self.h)
-			'''
+			
 		for xy in self.imagelist2(x,y): # second reflections
 			(xi,yi)=xy
 			Y=Y+pow(self.fRefl(xi,yi,xl,yl),2)*W(xi-xl,yi-yl,1.,1.,self.h)
-			'''
+			
 		return Y
 
 	def YPattern(self,Ypm,direction,istonormalize=1): # Lines pattern: direction=0, Columns: direction=1

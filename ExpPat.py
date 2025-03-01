@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 from numpy import cross, eye, dot
 from mpl_toolkits.mplot3d import Axes3D
 
-tabname="./Mean.txt"
+tabname="./Mean_invc_invl.txt"
 
 intable=np.loadtxt(tabname)
 
 
-xtab=np.array([-5.3,-3.3,-0.3,1.7,4.7])
-ytab=np.array([-5.3,-3.3,-0.3,1.7,4.7,6.7])
+xtab=np.array([-6, -4, -2, 0, 2, 4, 6])
+ytab=np.array([-6, -4, -2, 0, 2, 4])
 
 
 
